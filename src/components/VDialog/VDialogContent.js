@@ -15,7 +15,7 @@ import ClickOutside from '../../directives/click-outside'
 import { getZIndex } from '../../util/helpers'
 
 export default {
-  name: 'v-dialog',
+  name: 'v-dialog-content',
 
   mixins: [
     Dependent,
@@ -77,6 +77,12 @@ export default {
         'dialog__content': true,
         'dialog__content__active': this.isActive
       }
+    },
+    computedStyle () {
+      return this.fullscreen || {
+        maxWidth: this.maxWidth === 'none' ? undefined : (isNaN(this.maxWidth) ? this.maxWidth : `${this.maxWidth}px`),
+        width: this.width === 'auto' ? undefined : (isNaN(this.width) ? this.width : `${this.width}px`)
+      }
     }
   },
 
@@ -126,66 +132,38 @@ export default {
   },
 
   render (h) {
-    const children = []
-    const data = {
-      'class': this.classes,
-      ref: 'dialog',
-      directives: [
-        {
-          name: 'click-outside',
-          value: () => (this.isActive = false),
-          args: {
-            closeConditional: this.closeConditional,
-            include: this.getOpenDependentElements
-          }
-        },
-        { name: 'show', value: this.isActive }
-      ],
-      on: {
-        click: e => { e.stopPropagation() }
-      }
-    }
-
-    if (!this.fullscreen) {
-      data.style = {
-        maxWidth: this.maxWidth === 'none' ? undefined : (isNaN(this.maxWidth) ? this.maxWidth : `${this.maxWidth}px`),
-        width: this.width === 'auto' ? undefined : (isNaN(this.width) ? this.width : `${this.width}px`)
-      }
-    }
-
-    if (this.$slots.activator) {
-      children.push(h('div', {
-        'class': 'dialog__activator',
-        on: {
-          click: e => {
-            e.stopPropagation()
-            if (!this.disabled) this.isActive = !this.isActive
-          }
-        }
-      }, [this.$slots.activator]))
-    }
-
-    const dialog = h('transition', {
-      props: {
-        name: this.transition || '', // If false, show nothing
-        origin: this.origin
-      }
-    }, [h('div', data,
-      this.showLazyContent(this.$slots.default)
-    )])
-
-    children.push(h('div', {
-      'class': this.contentClasses,
-      domProps: { tabIndex: -1 },
+    return h('div', {
+      class: this.contentClasses,
+      attrs: { tabIndex: -1 },
       style: { zIndex: this.activeZIndex },
       ref: 'content'
-    }, [dialog]))
-
-    return h('div', {
-      staticClass: 'dialog__container',
-      style: {
-        display: (!this.$slots.activator || this.fullWidth) ? 'block' : 'inline-block'
-      }
-    }, children)
+    }, [
+      h('transition', {
+        props: {
+          name: this.transition || '', // If false, show nothing
+          origin: this.origin
+        }
+      }, [
+        h('div', {
+          class: this.classes,
+          style: this.computedStyle,
+          ref: 'dialog',
+          directives: [
+            {
+              name: 'click-outside',
+              value: () => (this.isActive = false),
+              args: {
+                closeConditional: this.closeConditional,
+                include: this.getOpenDependentElements
+              }
+            },
+            { name: 'show', value: this.isActive }
+          ],
+          on: {
+            click: e => { e.stopPropagation() }
+          }
+        }, this.showLazyContent(this.$slots.default))
+      ])
+    ])
   }
 }
