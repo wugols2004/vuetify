@@ -3,6 +3,8 @@ import '../../stylus/components/_bottom-sheets.styl'
 import VDialog from '../VDialog/VDialog'
 
 export default {
+  functional: true,
+
   name: 'v-bottom-sheet',
 
   props: {
@@ -19,28 +21,18 @@ export default {
     value: null
   },
 
-  render (h) {
-    const activator = h('template', {
-      slot: 'activator'
-    }, this.$slots.activator)
+  render (h, context) {
+    const slots = context.slots()
 
-    const contentClass = [
-      'bottom-sheet',
-      this.inset ? 'bottom-sheet--inset' : ''
-    ].join(' ')
+    const contentClass = 'bottom-sheet' +
+      (context.props.inset ? ' bottom-sheet--inset' : '')
 
     return h(VDialog, {
-      attrs: {
-        ...this.$props
-      },
-      on: {
-        ...this.$listeners
-      },
+      ...context.data,
       props: {
         contentClass: contentClass,
-        transition: 'bottom-sheet-transition',
-        value: this.value
+        transition: 'bottom-sheet-transition'
       }
-    }, [activator, this.$slots.default])
+    }, slots.activator ? [h('template', { slot: 'activator' }, slots.activator), slots.default] : slots.default)
   }
 }
