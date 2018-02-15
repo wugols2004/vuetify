@@ -61,6 +61,7 @@ test('VToolbar.vue', ({ mount }) => {
     wrapper.setProps({ app: true, clippedLeft: true, clippedRight: true })
     expect(wrapper.vm.computedPaddingLeft).toBe(0)
     expect(wrapper.vm.computedPaddingRight).toBe(0)
+    wrapper.destroy()
   })
 
   it('should calculate application top', async () => {
@@ -141,6 +142,7 @@ test('VToolbar.vue', ({ mount }) => {
 
     Vue.set(wrapper.vm.$vuetify.application, 'bar', 24)
     expect(wrapper.vm.computedMarginTop).toBe(24)
+    wrapper.destroy()
   })
 
   it('should set active based on manual scroll', async () => {

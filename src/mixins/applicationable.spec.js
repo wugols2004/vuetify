@@ -6,7 +6,7 @@ test('applicationable.js', ({ mount }) => {
   it('should update application on mount', async () => {
     const updateApplication = jest.fn()
     const wrapper = mount({
-      mixins: [ Applicationable() ],
+      mixins: [ Applicationable('top') ],
       methods: { updateApplication },
       render: h => h('div')
     })
@@ -20,7 +20,7 @@ test('applicationable.js', ({ mount }) => {
     const updateApplication = jest.fn()
     const removeApplication = jest.fn()
     const wrapper = mount({
-      mixins: [ Applicationable() ],
+      mixins: [ Applicationable('top') ],
       methods: { updateApplication, removeApplication },
       render: h => h('div')
     })
@@ -51,7 +51,7 @@ test('applicationable.js', ({ mount }) => {
   it('should call to remove application on destroy', async () => {
     const removeApplication = jest.fn()
     const wrapper = mount({
-      mixins: [ Applicationable() ],
+      mixins: [ Applicationable('top') ],
       methods: { removeApplication },
       render: h => h('div')
     })
@@ -64,12 +64,7 @@ test('applicationable.js', ({ mount }) => {
 
   it('should update application with dynamic property', async () => {
     const wrapper = mount({
-      mixins: [ Applicationable() ],
-      computed: {
-        applicationProperty () {
-          return 'top'
-        }
-      },
+      mixins: [ Applicationable('top') ],
       methods: {
         updateApplication () {
           return 30
@@ -80,6 +75,7 @@ test('applicationable.js', ({ mount }) => {
 
     wrapper.setProps({ app: true })
     await wrapper.vm.$nextTick()
+    // console.log(wrapper.vm.$vuetify.application.top)
     expect(wrapper.vm.$vuetify.application.top).toBe(30)
   })
 

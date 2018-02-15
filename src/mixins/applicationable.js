@@ -41,10 +41,14 @@ export default function applicationable (value, events = []) {
       callUpdate () {
         if (!this.app) return
 
-        this.$vuetify.application[this.applicationProperty] = this.updateApplication()
+        this.$vuetify.application.register(
+          this._uid,
+          this.applicationProperty,
+          this.updateApplication()
+        )
       },
       removeApplication () {
-        this.$vuetify.application[this.applicationProperty] = 0
+        this.$vuetify.application.unregister(this._uid, this.applicationProperty)
       },
       updateApplication: () => {}
     }

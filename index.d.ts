@@ -10,7 +10,12 @@ declare interface VuetifyApplication {
   bottom: number
   left: number
   right: number
-  top: number
+  top: number,
+  registered: object,
+  register: (uid: string | number, location: string, value: number) => void,
+  setValues: (location: string) => void,
+  unregister: (uid: string | number, location: string) => void,
+  values: (location: string) => number
 }
 
 declare interface VuetifyBreakpoint {

@@ -66,6 +66,7 @@ test('VFooter.js', ({ mount, functionalContext }) => {
     wrapper.vm.$vuetify.application.right  = 30
     await wrapper.vm.$nextTick()
     expect(wrapper.html()).toMatchSnapshot()
+    wrapper.destroy()
   })
 
   it('should have margin bottom', async () => {

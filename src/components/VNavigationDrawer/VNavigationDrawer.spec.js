@@ -27,6 +27,7 @@ test('VNavigationDrawer', ({ mount }) => {
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.$vuetify.application.left).toBe(0)
     expect(wrapper.vm.overlay).toBeTruthy()
+    wrapper.destroy()
   })
 
   it('should not resize the content when permanent and stateless', async () => {
@@ -42,6 +43,7 @@ test('VNavigationDrawer', ({ mount }) => {
     await resizeWindow(1200)
     expect(wrapper.vm.$vuetify.application.left).toBe(300)
     expect(wrapper.vm.overlay).toBeFalsy()
+    wrapper.destroy()
   })
 
   it('should not resize the content when permanent and resize watcher is disabled', async () => {
@@ -59,6 +61,7 @@ test('VNavigationDrawer', ({ mount }) => {
     await resizeWindow(1200)
     expect(wrapper.vm.$vuetify.application.left).toBe(300)
     expect(wrapper.vm.overlay).toBeFalsy()
+    wrapper.destroy()
   })
 
   it('should stay active when resizing a temporary drawer', async () => {
@@ -79,6 +82,7 @@ test('VNavigationDrawer', ({ mount }) => {
 
     expect(wrapper.vm.isActive).toBe(true)
     expect(wrapper.vm.overlay).toBeTruthy()
+    wrapper.destroy()
   })
 
   it('should open when changed to permanent', async () => {
@@ -123,6 +127,7 @@ test('VNavigationDrawer', ({ mount }) => {
 
     wrapper.setProps({ temporary: false })
     expect(wrapper.vm.$vuetify.application.left).toBe(300)
+    wrapper.destroy()
   })
 
   it('should update content padding when permanent state is changed', async () => {
@@ -139,6 +144,7 @@ test('VNavigationDrawer', ({ mount }) => {
 
     wrapper.setProps({ permanent: false })
     expect(wrapper.vm.$vuetify.application.left).toBe(0)
+    wrapper.destroy()
   })
 
   it('should update content padding when miniVariant is changed', async () => {
@@ -154,6 +160,7 @@ test('VNavigationDrawer', ({ mount }) => {
 
     wrapper.setProps({ miniVariant: false })
     expect(wrapper.vm.$vuetify.application.left).toBe(300)
+    wrapper.destroy()
   })
 
   it('should not remain mobile when temporary is toggled', async () => {
