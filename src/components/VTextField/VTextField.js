@@ -1,5 +1,5 @@
 // Styles
-import '../../stylus/components/_input-groups.styl'
+import '../../stylus/components/_input.styl'
 import '../../stylus/components/_text-fields.styl'
 
 // Mixins
@@ -283,6 +283,7 @@ export default {
   },
 
   render () {
-    return this.genInputGroup(this.genInput(), { attrs: { tabindex: false } })
+    return this.genInputGroup()
+    // return this.genInputGroup(this.genInput(), { attrs: { tabindex: false } })
   }
 }

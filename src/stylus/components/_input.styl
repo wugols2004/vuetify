@@ -1,0 +1,101 @@
+@import '../bootstrap'
+@import '../theme'
+
+/* Theme */
+v-input($material)
+  &__label
+    color: $material.text.secondary
+
+  input
+    color: $material.text.primary
+
+theme(v-input, "v-input")
+
+.v-input
+  display: flex
+  height: 48px
+  margin: 16px 0 8px
+
+  &--has-state
+    .v-input__label
+      color: inherit
+
+    .icon
+      color: inherit
+
+    .v-input__wrapper:after
+      transform: scaleX(1)
+
+  input
+    flex-grow: 1
+    flex: 1 1 auto
+    font-size: 16px
+    height: 24px
+    line-height: 24px // 16px height plus 8px to account for padding
+    padding: 0 0 8px
+    width: 100%
+
+    &:focus,
+    &:active
+      outline: none
+
+    + .v-input__icon
+      align-self: flex-start
+      margin: -4px 0 0
+      padding-top: 0
+
+  &__control
+    display: flex
+    flex-direction: column
+    flex-grow: 1
+    flex-wrap: wrap
+    justify-content: flex-end
+    position: relative
+
+  &__icon
+    align-items: center
+    display: inline-flex
+    justify-content: center
+    padding-top: 16px
+
+    &--prepend
+      margin-right: 16px
+
+    &--append
+      margin-left: 16px
+
+  &__label
+    bottom: 9px
+    font-size: 16px
+    left: 0
+    line-height: 1
+    min-height: 8px
+    position: absolute
+    transform-origin: top left
+    transition: .3s $transition.swing
+
+    &--active
+      transform: translate(0, -18px) scale(.75)
+
+  &__progress
+    margin: 0
+    padding: 0
+
+  &__wrapper
+    align-items: flex-start
+    border-bottom: 1px solid rgba(#000, .12)
+    color: inherit
+    display: flex
+    position: relative
+    width: 100%
+
+    &:after
+      background-color: currentColor
+      bottom: -1px
+      content: ''
+      height: 2px
+      left: 0
+      position: absolute
+      transform: scaleX(0)
+      transition: $primary-transition
+      width: 100%
